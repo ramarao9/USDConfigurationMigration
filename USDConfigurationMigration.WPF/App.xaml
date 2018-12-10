@@ -1,0 +1,83 @@
+﻿<Application x:Class="USDConfigurationMigration.WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:USDConfigurationMigration.WPF"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style x:Key="textLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="Segoe UI,Tahoma,Arial" />
+            <Setter Property="FontSize" Value="12px" />
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        </Style>
+
+        <Style x:Key="btnStyle" TargetType="Button">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="0px"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <ContentPresenter x:Name="Text" Content="{TemplateBinding Content}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="stdBtnStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="LightGray"/>
+            <Setter Property="BorderThickness" Value="0px"/>
+        </Style>
+        <Style x:Key="textBlockLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI,Tahoma,Arial" />
+            <Setter Property="Margin" Value="0,2,0,2" />
+        </Style>
+
+        <Style x:Key="textBlockLabelMediumStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI,Tahoma,Arial" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="FontSize" Value="12px" />
+        </Style>
+
+        <Style x:Key="infoPaneButtonStyle" TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI,Tahoma,Arial" />
+            <Setter Property="FontSize" Value="14px"/>
+            <Setter Property="BorderBrush" Value="#C6C6C6"/>
+            <Setter Property="BorderThickness" Value="1px"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#444444"/>
+            <Setter Property="MinWidth" Value="75"/>
+            <Setter Property="Height" Value="28px"/>
+        </Style>
+
+        <Style x:Key="headingLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="Segoe UI,Tahoma,Arial" />
+            <Setter Property="FontSize" Value="12px" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="infoPaneHeadingLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="Segoe UI,Tahoma,Arial" />
+            <Setter Property="FontSize" Value="16px" />
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="CountLabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="Segoe UI,Tahoma,Arial" />
+            <Setter Property="FontSize" Value="11px" />
+            <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        </Style>
+
+
+        <Style TargetType="TextBlock" x:Key="grdVwClmnTxtBlock">
+            <Setter Property="FontFamily" Value="Segoe UI,Tahoma,Arial" />
+            <Setter Property="FontSize" Value="12px" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="MinWidth" Value="150" />
+            <Setter Property="Padding" Value="13,0,0,0" />
+        </Style>
+
+
+    </Application.Resources>
+</Application>

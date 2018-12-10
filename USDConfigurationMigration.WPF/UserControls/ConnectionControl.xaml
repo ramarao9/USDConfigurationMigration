@@ -1,0 +1,214 @@
+﻿<UserControl x:Class="USDConfigurationMigration.WPF.UserControls.ConnectionControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:USDConfigurationMigration.WPF.UserControls"
+                 xmlns:converters="clr-namespace:USDConfigurationMigration.WPF.Converters"
+                           xmlns:extension="clr-namespace:USDConfigurationMigration.WPF.Extensions"
+             mc:Ignorable="d" 
+             Width="520"
+             Height="480"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <converters:RadioBoolToIntConverter x:Key="radioBoolToIntConverter" />
+
+    </UserControl.Resources>
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+
+
+        <Label Grid.Row="0" Content="Login" Style="{StaticResource infoPaneHeadingLabelStyle}" FontSize="20" />
+
+        <Grid Grid.Row="2" Background="LightGoldenrodYellow"  Visibility="{Binding ShowMessageNotification, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Image Grid.Column="0" Grid.Row="0" Source="{Binding MessageNotification.IconSrc}" Stretch="UniformToFill"  Width="16" Height="16"  />
+            <TextBlock Grid.Column="1" Grid.Row="0" Margin="5,0,0,0" Text="{Binding MessageNotification.Message}" TextWrapping="Wrap" />
+
+
+        </Grid>
+
+
+        <Grid Grid.Row="4" Visibility="{Binding HasExistingConnections, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   HorizontalContentAlignment="Left"
+                   Margin="0,0,0,0"
+                   Padding="0"
+                   Content="Use Existing"
+                   />
+            <RadioButton Grid.Row="0" Command="{Binding SolutionSourceCommand}" 
+                         Grid.Column="1" VerticalAlignment="Center"
+                         Margin="5,0,5,0"
+                         IsChecked="{Binding Path=ConnectionToUse, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=1}" 
+                         Content="Yes" />
+            <RadioButton Grid.Row="0" Command="{Binding SolutionSourceCommand}" 
+                         Grid.Column="2" VerticalAlignment="Center" 
+                         Margin="5,0,5,0"
+                         IsChecked="{Binding Path=ConnectionToUse, Converter={StaticResource radioBoolToIntConverter}, ConverterParameter=2}" 
+                         Content="No" />
+
+
+        </Grid>
+
+
+        <Grid Grid.Row="6"  Visibility="{Binding UseExistingConnection, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Connection"/>
+
+            <ComboBox Grid.Column="2" 
+                        ItemsSource="{Binding AvailableConnections}" 
+                      VerticalContentAlignment="Center"    
+                      SelectedItem="{Binding SelectedConnection,Mode=TwoWay}"
+                       BorderBrush="#C6C6C6"
+					  BorderThickness="1px"
+					  Background="White">
+
+
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding OrgDisplayName}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+
+            </ComboBox>
+        </Grid>
+
+        <Grid Grid.Row="8" DataContext="{Binding ConnectionItem}"
+              Visibility="{Binding RelativeSource={RelativeSource FindAncestor, 
+                        AncestorType={x:Type UserControl}}, Path=DataContext.UseNewConnection, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--Server-->
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="Organization URL"/>
+            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding OrganizationURL}"/>
+
+            <!--Authentication Type-->
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="Authentication Type"/>
+
+            <ComboBox  Grid.Row="2" Grid.Column="2" SelectedValuePath="Content" SelectedValue="{Binding Path=AuthType}">
+                <ComboBoxItem Content="AD"/>
+                <ComboBoxItem Content="IFD"/>
+                <ComboBoxItem Content="Office365"/>
+            </ComboBox>
+
+            <!--Username-->
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="User Name"/>
+            <TextBox Grid.Row="4" Grid.Column="2" Text="{Binding UserName}"/>
+
+            <!--Password-->
+            <TextBlock Grid.Row="6" Grid.Column="0" Text="Password"/>
+            <PasswordBox Grid.Row="6" Grid.Column="2" PasswordChanged="PasswordBox_PasswordChanged"/>
+
+            <!--Domain-->
+            <TextBlock Grid.Row="8" Grid.Column="0" Text="Domain"/>
+            <TextBox Grid.Row="8" Grid.Column="2" Text="{Binding Domain}"/>
+
+
+
+            <Grid Grid.Row="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Orientation="Horizontal" Grid.Row="10">
+                    <CheckBox Content="Save Connection"  IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, 
+                        AncestorType={x:Type UserControl}}, Path=DataContext.SaveConnection}"  />
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+
+        <Grid Grid.Row="8" Margin="25,0,25,0" HorizontalAlignment="Center"  VerticalAlignment="Center" >
+            <extension:GifImage 
+                                  Width="36"
+                                  Height="36"
+                                  Stretch="None"
+                                    Visibility="{Binding ConnectionInProgress, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+        </Grid>
+
+
+
+
+        <Grid Grid.Row="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+
+
+            <!--Buttons-->
+            <StackPanel Grid.Row="0"  Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Content="Connect" Margin="5" Width="100" Command="{Binding ConnectCommand}" IsEnabled="{Binding ConnectionInProgress, Converter={StaticResource BooleanNegationConverter}}"/>
+                <Button Content="Cancel" Margin="5" Width="100" Command="{Binding CancelCommand}" IsEnabled="{Binding ConnectionInProgress, Converter={StaticResource BooleanNegationConverter}}"/>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</UserControl>

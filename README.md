@@ -12,9 +12,12 @@ While this might not be beneficial for Organizations that use single configurati
 
 - Tool handles the export and import process without having the user build the schema file.
 
-- provides detailed information on the outcome of the migration process
+- Provides detailed information on the outcome of the migration process
 
-- can be used with a PowerShell script to enable Continous Integration
+- Can be used with a PowerShell script to enable Continous Integration
+
+
+
 
 
 # Limitations

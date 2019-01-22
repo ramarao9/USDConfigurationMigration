@@ -4,7 +4,6 @@ using System.Linq;
 using System;
 using Microsoft.Xrm.Sdk.Query;
 using System.Collections.Generic;
-using USDConfigurationMigration.Models;
 
 
 namespace USDConfigurationMigration.Repositories

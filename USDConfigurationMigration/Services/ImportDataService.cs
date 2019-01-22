@@ -1,15 +1,11 @@
-﻿using Microsoft.Xrm.Sdk;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.Xrm.Tooling.Connector;
 using System.Collections.Generic;
 using USDConfigurationMigration.Models;
 using USDConfigurationMigration.Helpers;
-using Microsoft.Xrm.Sdk.Messages;
 using System;
 using System.Text;
 using System.IO;
-using USDConfigurationMigration.Models;
-using USDConfigurationMigration.Helpers;
 using USDConfigurationMigration.Repositories;
 
 namespace USDConfigurationMigration.Services

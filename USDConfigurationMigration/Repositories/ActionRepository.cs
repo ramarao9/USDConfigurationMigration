@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
 using USDConfigurationMigration.Models;
-using USDConfigurationMigration.Models;
 using System;
 
 

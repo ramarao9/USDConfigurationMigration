@@ -4,8 +4,6 @@ using USDConfigurationMigration.Helpers;
 using System.Collections.Generic;
 
 using USDConfigurationMigration.Models;
-using USDConfigurationMigration.Models;
-using USDConfigurationMigration.Helpers;
 using System;
 
 namespace USDConfigurationMigration.Repositories
@@ -43,6 +41,7 @@ namespace USDConfigurationMigration.Repositories
         public ImportResult ImportConfiguration(IOrganizationService targetCrmService, USDConfiguration sourceUsdConfiguration, USDConfiguration targetUSDConfiguration)
         {
             ImportResult importresult = new ImportResult();
+            importresult.EntityLogicalName = "msdyusd_configuration";
 
             CRMEntity sourceConfigurationCE = sourceUsdConfiguration.GetCRMEntity("msdyusd_configuration");
             CRMEntity targetConfigurationCE = targetUSDConfiguration.GetCRMEntity("msdyusd_configuration");

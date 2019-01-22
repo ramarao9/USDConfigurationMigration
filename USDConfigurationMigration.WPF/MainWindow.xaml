@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:USDConfigurationMigration.WPF"
         xmlns:converters="clr-namespace:USDConfigurationMigration.WPF.Converters"
         mc:Ignorable="d"
-        Title="USD Configuration Migrator" Height="350" Width="525">
+        Title="USD Configuration Migrator" Height="300" Width="500">
 
     <Window.Resources>
         <converters:BooleanNegationConverter x:Key="BooleanNegationConverter"/>
     </Window.Resources>
-    <Grid>
+    <Grid Width="400" Height="300" Margin="10,5,10,5">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="10"/>
@@ -22,6 +22,8 @@
             <RowDefinition Height="30"/>
             <RowDefinition Height="10"/>
             <RowDefinition Height="30"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
 
@@ -90,11 +92,11 @@
                    Content="{Binding SelectedTargetConnection.OrgDisplayName}"
                    />
 
-           
 
 
 
-            
+
+
         </Grid>
 
 
@@ -149,6 +151,12 @@
 
             <Button Grid.Column="1" Content="Migrate" Margin="5" Width="100" Command="{Binding MigrateCommand}" IsEnabled="{Binding CanInitiateMigration}"/>
 
+
+        </Grid>
+
+
+        <Grid Grid.Row="10">
+            <TextBlock Text="{Binding MigrationStatusMessage}" Height="Auto" TextWrapping="WrapWithOverflow"/>
         </Grid>
 
     </Grid>

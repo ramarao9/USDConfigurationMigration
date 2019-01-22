@@ -2,7 +2,6 @@
 using Microsoft.Xrm.Sdk.Query;
 using System.Collections.Generic;
 using USDConfigurationMigration.Models;
-using USDConfigurationMigration.Models;
 using System.Linq;
 using MayoEnterprise.Libraries.Xrm;
 using System;

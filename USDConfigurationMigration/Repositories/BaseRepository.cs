@@ -3,14 +3,10 @@ using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using USDConfigurationMigration.Models;
 using USDConfigurationMigration.Helpers;
 using Microsoft.Xrm.Sdk.Messages;
-using USDConfigurationMigration.Helpers;
 using MayoEnterprise.Libraries.Xrm;
-using USDConfigurationMigration.Models;
 
 namespace USDConfigurationMigration.Repositories
 {
@@ -306,6 +302,11 @@ namespace USDConfigurationMigration.Repositories
 
 
             ImportResult importResult = GetImportResult(bulkResponse, sourceEntitiesCE);
+            if (string.IsNullOrWhiteSpace(importResult.EntityLogicalName) && entityLookupMatchCriteria != null)
+            {
+                importResult.EntityLogicalName = entityLookupMatchCriteria.EntityLogicalName;
+            }
+
             importResult.StartedOn = startedOn;
             importResult.EndedOn = endedOn;
 
@@ -367,6 +368,11 @@ namespace USDConfigurationMigration.Repositories
             DateTime endedOn = DateTime.Now;
 
             ImportResult importResult = GetImportResult(bulkResponse, sourceEntitiesCE);
+            if (string.IsNullOrWhiteSpace(importResult.EntityLogicalName) && m2mEntityMap != null)
+            {
+                importResult.EntityLogicalName = m2mEntityMap.IntersectEntity;
+            }
+
             importResult.StartedOn = startedOn;
             importResult.EndedOn = endedOn;
 

@@ -1,11 +1,8 @@
 ﻿using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace USDConfigurationMigration.Helpers
 {
@@ -35,8 +32,9 @@ namespace USDConfigurationMigration.Helpers
                 }
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
+                //To Do :- Log the error
                 return false;// Do not continue
             }
         }
@@ -54,8 +52,9 @@ namespace USDConfigurationMigration.Helpers
 
                 return true;
             }
-            catch (Exception ex)
+            catch 
             {
+                //To Do :- Log the error
                 return false;// Do not continue
             }
         }

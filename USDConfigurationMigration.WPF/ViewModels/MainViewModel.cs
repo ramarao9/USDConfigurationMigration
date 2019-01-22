@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,24 @@ namespace USDConfigurationMigration.WPF.ViewModels
 {
     public class MainViewModel : NotificationBase
     {
+
+        private string _migrationStatusMessage;
+        public string MigrationStatusMessage
+        {
+            get { return _migrationStatusMessage; }
+            set
+            {
+                if (_migrationStatusMessage != value)
+                {
+                    _migrationStatusMessage = value;
+                    RaisePropertyChanged(() => MigrationStatusMessage);
+                }
+            }
+        }
+
+
+
+
 
         private bool _canInitiateMigration = true;
         public bool CanInitiateMigration
@@ -47,6 +66,7 @@ namespace USDConfigurationMigration.WPF.ViewModels
 
                     RaisePropertyChanged(() => SelectedSourceConnection);
 
+                    _migrationStatusMessage = null;
                     var retrieveConfigsTask = RetrieveConfigurationsAsync();
                 }
             }
@@ -66,6 +86,8 @@ namespace USDConfigurationMigration.WPF.ViewModels
                 {
                     _selectedTargetConnection = value;
                     RaisePropertyChanged(() => SelectedTargetConnection);
+
+                    _migrationStatusMessage = null;
                 }
             }
         }
@@ -104,6 +126,8 @@ namespace USDConfigurationMigration.WPF.ViewModels
                 {
                     _selectedConfiguration = value;
                     RaisePropertyChanged(() => SelectedConfiguration);
+
+                    _migrationStatusMessage = null;
                 }
             }
         }
@@ -177,32 +201,57 @@ namespace USDConfigurationMigration.WPF.ViewModels
         private async Task MigrateAsync()
         {
 
+            string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string jobFolderName = GetJobFolderName();
+            string jobFolderPath = Path.Combine(currentAppDirectory, jobFolderName);
+
+            string xmlDataPath = Path.Combine(jobFolderPath, "data.xml");
+
+            string logFilePath = Path.Combine(jobFolderPath, "Logs");
+
+
+            MigrationStatusMessage = "Migration in process...";
+
+            string migrationError = null;
             await Task.Factory.StartNew(() =>
             {
+                try
+                {
 
-                ExportDataService exportDataService = new ExportDataService();
-                string currentAppDirectory = AppDomain.CurrentDomain.BaseDirectory;
-                string getjobFolderName = GetJobFolderName();
-                string jobFolderPath = Path.Combine(currentAppDirectory, getjobFolderName);
+                    ExportDataService exportDataService = new ExportDataService();
 
-                CreateFolderIfNotExists(jobFolderPath);
+                    CreateFolderIfNotExists(jobFolderPath);
 
-                CrmServiceClient sourceCrmService = GetCrmService(SelectedSourceConnection);
-                exportDataService.ExportData(sourceCrmService, SelectedConfiguration.Name, jobFolderPath);
+                    CrmServiceClient sourceCrmService = GetCrmService(SelectedSourceConnection);
+                    exportDataService.ExportData(sourceCrmService, SelectedConfiguration.Name, jobFolderPath);
 
 
-                CrmServiceClient targetCrmService = GetCrmService(SelectedTargetConnection);
-                ImportDataService importDataService = new ImportDataService();
+                    CrmServiceClient targetCrmService = GetCrmService(SelectedTargetConnection);
+                    ImportDataService importDataService = new ImportDataService();
 
-                string xmlDataPath = Path.Combine(jobFolderPath, "data.xml");
+                    CreateFolderIfNotExists(logFilePath);
 
-                string logFilePath = Path.Combine(jobFolderPath, "Logs");
-
-                CreateFolderIfNotExists(logFilePath);
-
-                importDataService.ImportData(targetCrmService, xmlDataPath, logFilePath, null);
+                    importDataService.ImportData(targetCrmService, xmlDataPath, logFilePath, null);
+                }
+                catch (Exception ex)
+                {
+                    migrationError = ex.Message;
+                }
 
             });
+
+            if (!string.IsNullOrWhiteSpace(migrationError))
+            {
+                MigrationStatusMessage = "Migration failed. Error:- " + migrationError;
+            }
+            else
+            {
+                MigrationStatusMessage = "Migration complete! Please review the Logs for any errors encountered.";
+                Process.Start(jobFolderPath);
+            }
+
+
+
         }
 
         private string GetJobFolderName()

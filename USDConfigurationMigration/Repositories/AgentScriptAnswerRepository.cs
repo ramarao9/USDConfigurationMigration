@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using USDConfigurationMigration.Models;
-using USDConfigurationMigration.Models;
 using System.Linq;
-using USDConfigurationMigration.Helpers;
 using System.Collections.Generic;
 using System;
 using Microsoft.Xrm.Sdk.Query;

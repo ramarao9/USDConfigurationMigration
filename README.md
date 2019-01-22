@@ -20,8 +20,9 @@ While this might not be beneficial for Organizations that use single configurati
 
 After the release is extracted, open the USDConfigurationMigration.WPF which would open up the below screen
 
-  ![](https://ramarao.blob.core.windows.net/usdconfigurationmigration/MigrateConfig.png)
 
+![](https://ramarao.blob.core.windows.net/usdconfigurationmigration/ConfigScreen.png)
+   
 - Select Source :- Specify the Source CRM Organization to export the USD configuration data. The data is stored in data.xml file and could be used for reference purpose.
 - Select Target :- Specify the Target CRM Organization to import the exported configuration data.
 - Configuration :- The configuration that needs to be migrated from Source to target. 

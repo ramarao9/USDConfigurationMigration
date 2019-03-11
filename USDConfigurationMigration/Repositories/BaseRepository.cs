@@ -488,12 +488,17 @@ namespace USDConfigurationMigration.Repositories
                                                                                             m2mEntityMapping);
 
 
+            Dictionary<string, OrganizationRequest> disassociateRequests = new Dictionary<string, OrganizationRequest>();
+            if (m2mEntityMapping.IntersectEntity != "msdyusd_uiievent_agentscriptaction" &&
+                m2mEntityMapping.IntersectEntity != "msdyusd_windowroute_agentscriptaction" &&
+                m2mEntityMapping.IntersectEntity != "msdyusd_task_agentscriptaction")
+            {
 
-
-            //Disassociate M2M Non Configuration Entity Intersect Records : Ex- msdyusd_subactioncalls, msdyusd_answer_agentscriptaction etc.
-            Dictionary<string, OrganizationRequest> disassociateRequests = GetM2MDisassociateRequests(sourceEntities,
-                                                                                                   targetEntities,
-                                                                                                   m2mEntityMapping);
+                //Disassociate M2M Non Configuration Entity Intersect Records : Ex- msdyusd_subactioncalls, msdyusd_answer_agentscriptaction etc.
+                disassociateRequests = GetM2MDisassociateRequests(sourceEntities,
+                                                                  targetEntities,
+                                                                  m2mEntityMapping);
+            }
 
             Dictionary<string, OrganizationRequest> associateOrDisassociateRequests = associateRequests.Union(disassociateRequests).ToDictionary(x => x.Key, y => y.Value);
             return associateOrDisassociateRequests;

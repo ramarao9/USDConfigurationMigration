@@ -7,6 +7,8 @@ using USDConfigurationMigration.Models;
 using USDConfigurationMigration.Helpers;
 using Microsoft.Xrm.Sdk.Messages;
 using MayoEnterprise.Libraries.Xrm;
+using Microsoft.Xrm.Sdk.Metadata;
+using Microsoft.Xrm.Tooling.Connector;
 
 namespace USDConfigurationMigration.Repositories
 {
@@ -52,10 +54,22 @@ namespace USDConfigurationMigration.Repositories
 
             if (results != null && results.Entities != null && results.Entities.Count > 0)
             {
+                List<string> entityAttributes = GetEntityAttributes(service, results.Entities[0].LogicalName);
 
                 List<CRMRecord> records = new List<CRMRecord>();
                 foreach (Entity entity in results.Entities)
                 {
+
+                    //This is needed as the fetch does not return null values in the results
+                    //This is useful in making sure that null values in source record are sent to the target record for a attribute
+                    foreach (string attribute in entityAttributes)
+                    {
+                        if (!entity.Contains(attribute))
+                        {
+                            entity[attribute] = null;
+                        }
+                    }
+
                     CRMRecord crmRecord = entity.ToCRMRecord();
                     records.Add(crmRecord);
                 }
@@ -76,9 +90,22 @@ namespace USDConfigurationMigration.Repositories
             if (results != null && results.Entities != null && results.Entities.Count > 0)
             {
 
+                List<string> entityAttributes = GetEntityAttributes(service, results.Entities[0].LogicalName);
+
                 List<CRMRecord> records = new List<CRMRecord>();
                 foreach (Entity entity in results.Entities)
                 {
+                    //This is needed as the fetch does not return null values in the results
+                    //This is useful in making sure that null values in source record are sent to the target record for a attribute
+                    foreach (string attribute in entityAttributes)
+                    {
+                        if (!entity.Contains(attribute))
+                        {
+                            entity[attribute] = null;
+                        }
+                    }
+
+
                     CRMRecord crmRecord = entity.ToCRMRecord();
                     records.Add(crmRecord);
                 }
@@ -643,6 +670,17 @@ namespace USDConfigurationMigration.Repositories
 
 
             return GetCleanedGuid(entity1Id) + "|" + GetCleanedGuid(entity2Id);
+        }
+
+
+        private List<string> GetEntityAttributes(IOrganizationService crmService, string entityLogicalName)
+        {
+            var entityMetadataRequest = new RetrieveEntityRequest { EntityFilters = EntityFilters.Attributes, LogicalName = entityLogicalName };
+            var entityResponse = (RetrieveEntityResponse)crmService.Execute(entityMetadataRequest);
+            var entityMetadata = entityResponse.EntityMetadata;
+
+            List<string> attributes = entityMetadata.Attributes.Select(x => x.LogicalName).ToList();
+            return attributes;
         }
 
         public string GetCleanedGuid(Guid id)

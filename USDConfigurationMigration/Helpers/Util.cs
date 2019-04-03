@@ -12,8 +12,17 @@ namespace USDConfigurationMigration.Helpers
         public static List<string> GetCRMAttributesToExclude()
         {
             return new List<string>() { "createdby",
+                                        "createdbyname",
                                         "createdonbehalfby",
+                                        "createdonbehalfbyname",
+                                        "createdonbehalfbyyominame",
+                                        "statecodename",
+                                        "owneridname",
+                                        "utcconversiontimezonecode",
+                                        "createdbyyominame",
                                         "modifiedby",
+                                        "modifiedbyname",
+                                        "versionnumber",
                                         "createdon",
                                         "modifiedonbehalfby",
                                         "modifiedon",

@@ -22,7 +22,7 @@ namespace USDConfigurationMigrationTests.Repositories
             _subActionCallsRepository = new SubActionCallsRepository();
         }
 
-        [TestMethod]
+      //  [TestMethod]
         public void TestGetSubActionCalls()
         {
 

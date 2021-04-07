@@ -10,7 +10,7 @@ namespace USDConfigurationMigrationTests
     [TestClass]
     public class TestMigrationService
     {
-        [TestMethod]
+       //[TestMethod]
         public void TestExportData()
         {
             //Arrange
@@ -25,12 +25,12 @@ namespace USDConfigurationMigrationTests
             exportDataService.ExportData(crmServiceClient, configurationToExport, exportConfigDataPath);
 
             //Assert
-            Assert.IsTrue(true);
+         //   Assert.IsTrue(true);
 
         }
 
 
-        [TestMethod]
+        //[TestMethod]
         public void TestImportData()
         {
             //Arrange
@@ -47,7 +47,7 @@ namespace USDConfigurationMigrationTests
             importDataService.ImportData(crmServiceClient, xmlDataPath, logFilePath, null);
 
             //Assert
-            Assert.IsTrue(true);
+          //  Assert.IsTrue(true);
 
         }
     }

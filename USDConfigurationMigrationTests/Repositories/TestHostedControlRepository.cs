@@ -21,7 +21,7 @@ namespace USDConfigurationMigrationTests.Repositories
             _hostedControlRepository = new HostedControlRepository();
         }
 
-        [TestMethod]
+       // [TestMethod]
         public void TestGetHostedControlsFetchXML()
         {
 
@@ -35,7 +35,7 @@ namespace USDConfigurationMigrationTests.Repositories
 
         }
 
-        [TestMethod]
+     //   [TestMethod]
         public void TestGetHostedControls()
         {
             CrmServiceClient crmService = TestUtil.GetSourceCRMClient();
